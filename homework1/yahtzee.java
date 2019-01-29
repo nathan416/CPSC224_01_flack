@@ -4,6 +4,7 @@ public class yahtzee
 {
 	public static void main(String [] args)
 	{
+		Scanner scnr;
 		final int DICE_IN_PLAY = 5;
 		int hand[];
 		hand = new int [DICE_IN_PLAY];
@@ -61,39 +62,39 @@ public class yahtzee
 		    if (maxOfAKindFound(hand) >= 3)
 		    {
 		        System.out.print( "Score " << totalAllDice(hand) << " on the ";
-		        System.out.print( "3 of a Kind line" << endl;
+		        System.out.print( "3 of a Kind line\n");
 		    }
-		    else System.out.print( "Score 0 on the 3 of a Kind line" << endl;
+		    else System.out.print( "Score 0 on the 3 of a Kind line\n");
 
 		    if (maxOfAKindFound(hand) >= 4)
 		    {
 		        System.out.print( "Score " << totalAllDice(hand) << " on the ";
-		        System.out.print( "4 of a Kind line" << endl;
+		        System.out.print( "4 of a Kind line\n");
 		    }
-		    else System.out.print( "Score 0 on the 4 of a Kind line" << endl;
+		    else System.out.print( "Score 0 on the 4 of a Kind line\n");
 
 		    if (fullHouseFound(hand))
-		        System.out.print( "Score 25 on the Full House line" << endl;
+		        System.out.print( "Score 25 on the Full House line\n");
 		    else
-		        System.out.print( "Score 0 on the Full House line" << endl;
+		        System.out.print( "Score 0 on the Full House line\n");
 
 		    if (maxStraightFound(hand) >= 4)
-		        System.out.print( "Score 30 on the Small Straight line" << endl;
+		        System.out.print( "Score 30 on the Small Straight line\n");
 		    else
-		        System.out.print( "Score 0 on the Small Straight line" << endl;
+		        System.out.print( "Score 0 on the Small Straight line\n");
 
 		    if (maxStraightFound(hand) >= 5)
-		        System.out.print( "Score 40 on the Large Straight line" << endl;
+		        System.out.print( "Score 40 on the Large Straight line\n");
 		    else
-		        System.out.print( "Score 0 on the Large Straight line" << endl;
+		        System.out.print( "Score 0 on the Large Straight line\n");
 
 		    if (maxOfAKindFound(hand) >= 5)
-		        System.out.print( "Score 50 on the Yahtzee line" << endl;
+		        System.out.print( "Score 50 on the Yahtzee line\n");
 		    else
-		        System.out.print( "Score 0 on the Yahtzee line" << endl;
+		        System.out.print( "Score 0 on the Yahtzee line\n");
 
 		    System.out.print( "Score " << totalAllDice(hand) << " on the ";
-		    System.out.print( "Chance line" << endl;
+		    System.out.print( "Chance line\n");
 		    System.out.print( "\nEnter 'y' to play again ";
 		    cin >> playAgain;
 		}
