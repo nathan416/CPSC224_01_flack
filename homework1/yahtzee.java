@@ -2,23 +2,26 @@ import java.util.*;
 
 public class yahtzee
 {
+	static Random rnd = new Random(3213231);
 	public static void main(String [] args)
 	{
-		Scanner scnr;
+
+		Scanner scnr = new Scanner(System.in);
 		final int DICE_IN_PLAY = 5;
 		int hand[];
 		hand = new int [DICE_IN_PLAY];
 		char playAgain = 'y';
+
 		while (playAgain == 'y')
 		{
-		    string keep = "nnnnn"; //setup to roll all dice in the first roll
+		    String keep = "nnnnn"; //setup to roll all dice in the first roll
 		    int turn = 1;
 		    while (turn < 4 && keep != "yyyyy")
 		    {
 		        //roll dice not kept
 		        for (int dieNumber = 0; dieNumber < DICE_IN_PLAY; dieNumber++)
 		        {
-		            if (keep[dieNumber] != 'y')
+		            if (keep.charAt(dieNumber) != 'y')
 		                hand[dieNumber] = rollDie();
 		        }
 		        //output roll
@@ -32,7 +35,7 @@ public class yahtzee
 		        if (turn < 3)
 		        {
 		            System.out.print( "enter dice to keep (y or n) ");
-		            cin >> keep;
+		            keep = scnr.next();
 		        }
 		        turn++;
 		    }
@@ -61,14 +64,14 @@ public class yahtzee
 		    //lower scorecard
 		    if (maxOfAKindFound(hand) >= 3)
 		    {
-		        System.out.print( "Score " << totalAllDice(hand) << " on the ";
+		        System.out.print( "Score " + totalAllDice(hand) + " on the ");
 		        System.out.print( "3 of a Kind line\n");
 		    }
 		    else System.out.print( "Score 0 on the 3 of a Kind line\n");
 
 		    if (maxOfAKindFound(hand) >= 4)
 		    {
-		        System.out.print( "Score " << totalAllDice(hand) << " on the ";
+		        System.out.print( "Score " + totalAllDice(hand) + " on the ");
 		        System.out.print( "4 of a Kind line\n");
 		    }
 		    else System.out.print( "Score 0 on the 4 of a Kind line\n");
@@ -93,16 +96,16 @@ public class yahtzee
 		    else
 		        System.out.print( "Score 0 on the Yahtzee line\n");
 
-		    System.out.print( "Score " << totalAllDice(hand) << " on the ";
+		    System.out.print( "Score " + totalAllDice(hand) + " on the ");
 		    System.out.print( "Chance line\n");
-		    System.out.print( "\nEnter 'y' to play again ";
-		    cin >> playAgain;
+		    System.out.print( "\nEnter 'y' to play again ");
+		    playAgain = scnr.next().charAt(0);
 		}
 	}
 
 	public static int rollDie()
 	{
-		int roll = rand() % 6 + 1;
+		int roll = rnd.nextInt(100) % 6 + 1;
 		return roll;
 	}
 
