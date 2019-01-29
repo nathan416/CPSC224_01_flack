@@ -15,13 +15,14 @@ public class yahtzee
 		while (playAgain == 'y')
 		{
 		    String keep = "nnnnn"; //setup to roll all dice in the first roll
+			char ckeep[] = keep.toCharArray();
 		    int turn = 1;
 		    while (turn < 4 && keep != "yyyyy")
 		    {
 		        //roll dice not kept
 		        for (int dieNumber = 0; dieNumber < DICE_IN_PLAY; dieNumber++)
 		        {
-		            if (keep.charAt(dieNumber) != 'y')
+		            if (ckeep[dieNumber] != 'y')
 		                hand[dieNumber] = rollDie();
 		        }
 		        //output roll
