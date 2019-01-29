@@ -37,6 +37,7 @@ public class yahtzee
 		        {
 		            System.out.print( "enter dice to keep (y or n) ");
 		            keep = scnr.next();
+					ckeep = keep.toCharArray();
 		        }
 		        turn++;
 		    }
