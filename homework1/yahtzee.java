@@ -1,3 +1,8 @@
+/***************
+Homework #1
+Due Date: 1/31/2019
+Names:Nathan Flack
+********************/
 import java.util.*;
 
 public class yahtzee
