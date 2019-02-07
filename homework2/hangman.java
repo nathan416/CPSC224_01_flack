@@ -1,7 +1,7 @@
 /***************
 Homework #2
 Due Date: 2/11/2019
-Names:Nathan Flack
+Names:Nathan Flack, Evan Swanson
 ********************/
 import java.util.*;
 import javax.swing.JOptionPane;
