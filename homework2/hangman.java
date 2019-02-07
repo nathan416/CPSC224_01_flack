@@ -53,4 +53,12 @@ public class hangman
 
 		}
 	}
+
+	public static String generateRandomWord()
+	{
+		String[] words = {"Goats" , "Apple", "Homework", "Laptop", "Internet"};
+		Random rand = new Random();
+		int n = rand.nextInt(5);
+		return words[n];
+	}
 }
