@@ -26,7 +26,10 @@ public class hangman
 				theWord = generateRandomWord();
 
 			else
+			{
 				theWord = JOptionPane.showInputDialog("Enter the word: ");
+				theWord = theWord.toLowerCase();
+			}
 
 
 			String currentState = "";
@@ -43,19 +46,16 @@ public class hangman
 				if(currentState.equals(theWord))
 				{
 					gameWon = true;
-					JOptionPane.showMessageDialog(null, "Congradulations, you won!\n" + "    " + theWord);
+					JOptionPane.showMessageDialog(null, "Congratulations, you won!\n" + "The word was: " + theWord);
 				}
 				else
 					displayHangman(strikes);
 			}
+			if(!gameWon)
+				JOptionPane.showMessageDialog(null, "Sorry, you lost\n" + "The word was: " + theWord);
 
 			userOption = displayMenu();
 		}
-	}
-
-	public static void menu()
-	{
-
 	}
 
 	public static void displayHangman(int strikes)
@@ -96,7 +96,7 @@ public class hangman
 
 	public static String generateRandomWord()
 	{
-		String[] words = {"Goats" , "Apple", "Homework", "Laptop", "Internet"};
+		String[] words = {"goats" , "apple", "homework", "laptop", "internet"};
 		Random rand = new Random();
 		int n = rand.nextInt(5);
 		return words[n];
@@ -125,6 +125,13 @@ public class hangman
 	public static char getInput(String currentState, String theWord)
 	{
 		String userGuess = JOptionPane.showInputDialog("Guess a letter: \n" + currentState);
+		userGuess = userGuess.toLowerCase();
+		while(!Character.isLetter(userGuess.charAt(0)))
+		{
+			JOptionPane.showMessageDialog(null, "Invalid Input");
+			userGuess = JOptionPane.showInputDialog("Guess a letter: \n" + currentState);
+			userGuess = userGuess.toLowerCase();
+		}
 		return userGuess.charAt(0);
 
 	}
