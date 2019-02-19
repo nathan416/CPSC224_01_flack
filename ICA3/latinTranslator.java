@@ -59,7 +59,7 @@ public class latinTranslator extends JFrame
 	   panel = new JPanel();
 	   panel.add(Sinister);
 	   panel.add(Medium);
-	   panel.add(Dexter);  
+	   panel.add(Dexter);
 	}
 
 	private class RadioButtonListener implements ActionListener
