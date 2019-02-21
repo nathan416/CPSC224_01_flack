@@ -95,7 +95,7 @@ public class tictactoe extends JFrame
        {
 		   if (e.getSource() == topLeft)
            {
-			   topLeft.setIcon(Ximage);
+			   topLeft.setIcon(Oimage);
 		   }
 		   else if (e.getSource() == topCenter)
            {
@@ -129,7 +129,6 @@ public class tictactoe extends JFrame
            {
 
 		   }
-		   pack();
        }
     }
 
