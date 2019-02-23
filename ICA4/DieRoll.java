@@ -16,7 +16,7 @@ public class DieRoll extends JFrame
 	private	JLabel dieLabel2;
 
 	private final int WINDOW_WIDTH = 310;  // Window width
-	private final int WINDOW_HEIGHT = 310;
+	private final int WINDOW_HEIGHT = 200;
 
 	private JButton rollButton;
 
@@ -53,6 +53,11 @@ public class DieRoll extends JFrame
 	private void buildPanel()
 	{
 		rollButton = new JButton("Roll the Dice");
+		dieLabel1 = new JLabel();
+		dieLabel2 = new JLabel();
+
+		dieLabel1.setIcon(Die1);
+		dieLabel2.setIcon(Die1);
 
 		rollButton.addActionListener(new DieRollListener());
 
@@ -68,8 +73,8 @@ public class DieRoll extends JFrame
        public void actionPerformed(ActionEvent e)
        {
 		   	rand = new Random();
-		   	int n = rand.nextInt(5);
-		   	int m = rand.nextInt(5);
+		   	int n = rand.nextInt(6);
+		   	int m = rand.nextInt(6);
 			if (n == 0)
 			{
 				dieLabel1.setIcon(Die1);
@@ -94,6 +99,7 @@ public class DieRoll extends JFrame
 			{
 				dieLabel1.setIcon(Die6);
 			}
+
 			if (m == 0)
 			{
 				dieLabel2.setIcon(Die1);
