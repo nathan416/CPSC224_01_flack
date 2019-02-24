@@ -21,6 +21,7 @@ public class tictactoe extends JFrame
 
 	private final int WINDOW_WIDTH = 500;  // Window width
 	private final int WINDOW_HEIGHT = 500;
+	private int playerTurn = 1;		//Keep track of whose turn it is
 
 	private JButton topLeft;
 	private JButton topCenter;
@@ -88,8 +89,12 @@ public class tictactoe extends JFrame
 	{
 		bottomPanel = new JPanel();
 		newGame = new JButton("New Game");
-		exitGame = new JButton("Reset");
-		resetGame = new JButton("Exit");
+		exitGame = new JButton("Exit");
+		resetGame = new JButton("Reset");
+
+		exitGame.addActionListener(new TicTacToeListener());
+		newGame.addActionListener(new TicTacToeListener());
+		resetGame.addActionListener(new TicTacToeListener());
 
 		bottomPanel.add(newGame);
 		bottomPanel.add(resetGame);
@@ -105,7 +110,7 @@ public class tictactoe extends JFrame
 		playerLosses = new JLabel("Losses:	");
 		playerName = new JLabel("Name:	");
 
-		player1Name.addActionListener(new nameListener());
+		player1Name.addActionListener(new TicTacToeListener());
 
 		player1Panel = new JPanel();
 		player1Panel.setSize(50,20);
@@ -129,7 +134,7 @@ public class tictactoe extends JFrame
 		playerLosses = new JLabel("Losses:	");
 		playerName = new JLabel("Name:	");
 
-		player2Name.addActionListener(new nameListener());
+		player2Name.addActionListener(new TicTacToeListener());
 
 		player2Panel = new JPanel();
 		player2Panel.setSize(50,20);
@@ -189,48 +194,153 @@ public class tictactoe extends JFrame
        {
 		   if (e.getSource() == topLeft)
            {
-			   topLeft.setIcon(Oimage);
+			   if (topLeft.getIcon() != Ximage && topLeft.getIcon() != Oimage) //ensure it is not one that has already been clicked
+			   {
+					if (playerTurn == 1) //determine whose turn it is and set the image
+					{
+							topLeft.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							topLeft.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
 		   else if (e.getSource() == topCenter)
            {
-
+			   if (topCenter.getIcon() != Ximage && topCenter.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							topCenter.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							topCenter.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
 		   else if (e.getSource() == topRight)
            {
-
+			   if (topRight.getIcon() != Ximage && topRight.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							topRight.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							topRight.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
 		   else if (e.getSource() == middleLeft)
            {
+			   if (middleLeft.getIcon() != Ximage && middleLeft.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							middleLeft.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							middleLeft.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 
 		   }
 		   else if (e.getSource() == middleCenter)
            {
+			   if (middleCenter.getIcon() != Ximage && middleCenter.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							middleCenter.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							middleCenter.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 
 		   }
 		   else if (e.getSource() == middleRight)
            {
+			   if (middleRight.getIcon() != Ximage && middleRight.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							middleRight.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							middleRight.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 
 		   }
 		   else if (e.getSource() == bottomLeft)
            {
-
+			   if (bottomLeft.getIcon() != Ximage && bottomLeft.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							bottomLeft.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							bottomLeft.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
 		   else if (e.getSource() == bottomCenter)
            {
-
+			   if (bottomCenter.getIcon() != Ximage && bottomCenter.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							bottomCenter.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							bottomCenter.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
 		   else if (e.getSource() == bottomRight)
            {
-
+			   if (bottomRight.getIcon() != Ximage && bottomRight.getIcon() != Oimage)
+			   {
+					if (playerTurn == 1)
+					{
+							bottomRight.setIcon(Ximage);
+							playerTurn = 2;
+					}
+					else if (playerTurn == 2)
+					{
+							bottomRight.setIcon(Oimage);
+							playerTurn = 1;
+					}
+			   }
 		   }
-       }
-    }
 
-	private class nameListener implements ActionListener
-    {
-       public void actionPerformed(ActionEvent e)
-       {
-		   if (e.getSource() == player1Name)
+		   else if (e.getSource() == player1Name)
 		   {
 				Border border = BorderFactory.createTitledBorder( player1Name.getText() +" (X)");
 				player1Panel.setBorder(border);
@@ -240,8 +350,13 @@ public class tictactoe extends JFrame
 				Border border = BorderFactory.createTitledBorder( player2Name.getText() +" (O)");
 				player2Panel.setBorder(border);
 		   }
+		   else if (e.getSource() == exitGame)
+		   {
+			   System.exit(0);
+		   }
        }
     }
+
 	public static void main(String[] args)
    	{
       	new tictactoe();
