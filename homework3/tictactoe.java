@@ -18,10 +18,13 @@ public class tictactoe extends JFrame
 	private JPanel player2Panel;
 	private JPanel topPanel;
 	private JPanel bottomPanel;
+	private JPanel bottomButtons;
+	private JPanel statusBar;
 
 	private final int WINDOW_WIDTH = 500;  // Window width
 	private final int WINDOW_HEIGHT = 500;
 	private int playerTurn = 1;		//Keep track of whose turn it is
+	private boolean gameInProgress = false;
 
 	private JButton topLeft;
 	private JButton topCenter;
@@ -46,6 +49,7 @@ public class tictactoe extends JFrame
 	private JButton newGame;
 	private JButton resetGame;
 	private JButton exitGame;
+	private JLabel statusMessage;
 
 
 
@@ -88,22 +92,32 @@ public class tictactoe extends JFrame
 	private void buildBottomPanel()
 	{
 		bottomPanel = new JPanel();
+		statusBar = new JPanel();
+		bottomButtons = new JPanel();
 		newGame = new JButton("New Game");
 		exitGame = new JButton("Exit");
 		resetGame = new JButton("Reset");
+		statusMessage = new JLabel("Welcome to Tic-Tac-Toe!");
 
 		exitGame.addActionListener(new TicTacToeListener());
 		newGame.addActionListener(new TicTacToeListener());
 		resetGame.addActionListener(new TicTacToeListener());
 
-		bottomPanel.add(newGame);
-		bottomPanel.add(resetGame);
-		bottomPanel.add(exitGame);
+		bottomPanel.setLayout(new BorderLayout());
+
+		Border border = BorderFactory.createEtchedBorder();
+		statusBar.setBorder(border);
+		statusBar.add(statusMessage);
+		bottomButtons.add(newGame);
+		bottomButtons.add(resetGame);
+		bottomButtons.add(exitGame);
+		bottomPanel.add(bottomButtons, BorderLayout.CENTER);
+		bottomPanel.add(statusBar, BorderLayout.SOUTH);
 	}
 
 	private void buildPlayer1Panel()
 	{
-		player1Name = new JTextField(8);
+		player1Name = new JTextField("Player 1", 8);
 		player1Wins = new JLabel("0");
 		player1Losses = new JLabel("0");
 		playerWins = new JLabel("Wins:	");
@@ -127,7 +141,7 @@ public class tictactoe extends JFrame
 
 	private void buildPlayer2Panel()
 	{
-		player2Name = new JTextField(8);
+		player2Name = new JTextField("Player 2",8);
 		player2Wins = new JLabel("0");
 		player2Losses = new JLabel("0");
 		playerWins = new JLabel("Wins:	");
@@ -192,155 +206,176 @@ public class tictactoe extends JFrame
     {
        public void actionPerformed(ActionEvent e)
        {
-		   if (e.getSource() == topLeft)
-           {
-			   if (topLeft.getIcon() != Ximage && topLeft.getIcon() != Oimage) //ensure it is not one that has already been clicked
-			   {
-					if (playerTurn == 1) //determine whose turn it is and set the image
+		   if(gameInProgress)
+		   {
+				if (e.getSource() == topLeft)
+				{
+					if (topLeft.getIcon() != Ximage && topLeft.getIcon() != Oimage) //ensure it is not one that has already been clicked
 					{
-							topLeft.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1) //determine whose turn it is and set the image
+							{
+									topLeft.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									topLeft.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
+				}
+				else if (e.getSource() == topCenter)
+				{
+					if (topCenter.getIcon() != Ximage && topCenter.getIcon() != Oimage)
 					{
-							topLeft.setIcon(Oimage);
-							playerTurn = 1;
+							if (playerTurn == 1)
+							{
+									topCenter.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									topCenter.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-			   }
-		   }
-		   else if (e.getSource() == topCenter)
-           {
-			   if (topCenter.getIcon() != Ximage && topCenter.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
+				}
+				else if (e.getSource() == topRight)
+				{
+					if (topRight.getIcon() != Ximage && topRight.getIcon() != Oimage)
 					{
-							topCenter.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1)
+							{
+									topRight.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									topRight.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
+				}
+				else if (e.getSource() == middleLeft)
+				{
+					if (middleLeft.getIcon() != Ximage && middleLeft.getIcon() != Oimage)
 					{
-							topCenter.setIcon(Oimage);
-							playerTurn = 1;
+							if (playerTurn == 1)
+							{
+									middleLeft.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									middleLeft.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-			   }
-		   }
-		   else if (e.getSource() == topRight)
-           {
-			   if (topRight.getIcon() != Ximage && topRight.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
-					{
-							topRight.setIcon(Ximage);
-							playerTurn = 2;
-					}
-					else if (playerTurn == 2)
-					{
-							topRight.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
-		   }
-		   else if (e.getSource() == middleLeft)
-           {
-			   if (middleLeft.getIcon() != Ximage && middleLeft.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
-					{
-							middleLeft.setIcon(Ximage);
-							playerTurn = 2;
-					}
-					else if (playerTurn == 2)
-					{
-							middleLeft.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
 
-		   }
-		   else if (e.getSource() == middleCenter)
-           {
-			   if (middleCenter.getIcon() != Ximage && middleCenter.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
+				}
+				else if (e.getSource() == middleCenter)
+				{
+					if (middleCenter.getIcon() != Ximage && middleCenter.getIcon() != Oimage)
 					{
-							middleCenter.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1)
+							{
+									middleCenter.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									middleCenter.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
-					{
-							middleCenter.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
 
-		   }
-		   else if (e.getSource() == middleRight)
-           {
-			   if (middleRight.getIcon() != Ximage && middleRight.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
+				}
+				else if (e.getSource() == middleRight)
+				{
+					if (middleRight.getIcon() != Ximage && middleRight.getIcon() != Oimage)
 					{
-							middleRight.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1)
+							{
+									middleRight.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									middleRight.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
-					{
-							middleRight.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
 
-		   }
-		   else if (e.getSource() == bottomLeft)
-           {
-			   if (bottomLeft.getIcon() != Ximage && bottomLeft.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
+				}
+				else if (e.getSource() == bottomLeft)
+				{
+					if (bottomLeft.getIcon() != Ximage && bottomLeft.getIcon() != Oimage)
 					{
-							bottomLeft.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1)
+							{
+									bottomLeft.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									bottomLeft.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
+				}
+				else if (e.getSource() == bottomCenter)
+				{
+					if (bottomCenter.getIcon() != Ximage && bottomCenter.getIcon() != Oimage)
 					{
-							bottomLeft.setIcon(Oimage);
-							playerTurn = 1;
+							if (playerTurn == 1)
+							{
+									bottomCenter.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									bottomCenter.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-			   }
-		   }
-		   else if (e.getSource() == bottomCenter)
-           {
-			   if (bottomCenter.getIcon() != Ximage && bottomCenter.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
+				}
+				else if (e.getSource() == bottomRight)
+				{
+					if (bottomRight.getIcon() != Ximage && bottomRight.getIcon() != Oimage)
 					{
-							bottomCenter.setIcon(Ximage);
-							playerTurn = 2;
+							if (playerTurn == 1)
+							{
+									bottomRight.setIcon(Ximage);
+									playerTurn = 2;
+									statusMessage.setText(player2Name.getText() + "'s turn.");
+							}
+							else if (playerTurn == 2)
+							{
+									bottomRight.setIcon(Oimage);
+									playerTurn = 1;
+									statusMessage.setText(player1Name.getText() + "'s turn.");
+							}
 					}
-					else if (playerTurn == 2)
-					{
-							bottomCenter.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
-		   }
-		   else if (e.getSource() == bottomRight)
-           {
-			   if (bottomRight.getIcon() != Ximage && bottomRight.getIcon() != Oimage)
-			   {
-					if (playerTurn == 1)
-					{
-							bottomRight.setIcon(Ximage);
-							playerTurn = 2;
-					}
-					else if (playerTurn == 2)
-					{
-							bottomRight.setIcon(Oimage);
-							playerTurn = 1;
-					}
-			   }
+				}
 		   }
 
-		   else if (e.getSource() == player1Name)
+		   if (e.getSource() == player1Name)
 		   {
 				Border border = BorderFactory.createTitledBorder( player1Name.getText() +" (X)");
 				player1Panel.setBorder(border);
@@ -353,6 +388,48 @@ public class tictactoe extends JFrame
 		   else if (e.getSource() == exitGame)
 		   {
 			   System.exit(0);
+		   }
+		   else if (e.getSource() == newGame)
+		   {
+			   gameInProgress = true;
+			   player1Name.setEditable(false);
+			   player2Name.setEditable(false);
+			   statusMessage.setText(player1Name.getText() + "'s turn.");
+			   topRight.setIcon(null);
+			   topCenter.setIcon(null);
+			   topLeft.setIcon(null);
+			   middleLeft.setIcon(null);
+			   middleRight.setIcon(null);
+			   middleCenter.setIcon(null);
+			   bottomLeft.setIcon(null);
+			   bottomCenter.setIcon(null);
+			   bottomRight.setIcon(null);
+		   }
+		   else if (e.getSource() == resetGame)
+		   {
+			   gameInProgress = false;
+			
+			   player1Name.setText("Player 1");
+			   player1Name.setEditable(true);
+			   player2Name.setText("Player 2");
+			   player2Name.setEditable(true);
+
+			   statusMessage.setText("Welcom to Tic-Tac-Toe");
+
+				player1Losses.setText("0");
+				player1Wins.setText("0");
+				player2Losses.setText("0");
+				player2Wins.setText("0");
+
+			   topRight.setIcon(null);
+			   topCenter.setIcon(null);
+			   topLeft.setIcon(null);
+			   middleLeft.setIcon(null);
+			   middleRight.setIcon(null);
+			   middleCenter.setIcon(null);
+			   bottomLeft.setIcon(null);
+			   bottomCenter.setIcon(null);
+			   bottomRight.setIcon(null);
 		   }
        }
     }
