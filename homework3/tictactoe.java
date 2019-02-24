@@ -6,6 +6,8 @@ Names:Nathan Flack, Evan Swanson
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 
 
@@ -15,6 +17,7 @@ public class tictactoe extends JFrame
 	private JPanel player1Panel;
 	private JPanel player2Panel;
 	private JPanel topPanel;
+	private JPanel bottomPanel;
 
 	private final int WINDOW_WIDTH = 500;  // Window width
 	private final int WINDOW_HEIGHT = 500;
@@ -39,6 +42,10 @@ public class tictactoe extends JFrame
 	private JLabel playerLosses;
 	private JLabel playerName;
 
+	private JButton newGame;
+	private JButton resetGame;
+	private JButton exitGame;
+
 
 
 	ImageIcon Ximage = new ImageIcon("X.png");
@@ -61,6 +68,7 @@ public class tictactoe extends JFrame
 		buildPanel();
 		buildPlayer1Panel();
 		buildPlayer2Panel();
+		buildBottomPanel();
 
 		   // Add the panel to the frame's content pane.
 		add(panel, BorderLayout.CENTER);
@@ -70,9 +78,22 @@ public class tictactoe extends JFrame
 		topPanel.add(player1Panel, BorderLayout.NORTH);
 		topPanel.add(player2Panel, BorderLayout.NORTH);
 		add(topPanel, BorderLayout.NORTH);
+		add(bottomPanel, BorderLayout.SOUTH);
 
 		   // Display the window.
 		setVisible(true);
+	}
+
+	private void buildBottomPanel()
+	{
+		bottomPanel = new JPanel();
+		newGame = new JButton("New Game");
+		exitGame = new JButton("Reset");
+		resetGame = new JButton("Exit");
+
+		bottomPanel.add(newGame);
+		bottomPanel.add(resetGame);
+		bottomPanel.add(exitGame);
 	}
 
 	private void buildPlayer1Panel()
@@ -84,9 +105,13 @@ public class tictactoe extends JFrame
 		playerLosses = new JLabel("Losses:	");
 		playerName = new JLabel("Name:	");
 
+		player1Name.addActionListener(new nameListener());
+
 		player1Panel = new JPanel();
 		player1Panel.setSize(50,20);
 		player1Panel.setLayout(new GridLayout(3,2));
+		Border border = BorderFactory.createTitledBorder("Player 1 (X)");
+		player1Panel.setBorder(border);
 		player1Panel.add(playerName);
 		player1Panel.add(player1Name);
 		player1Panel.add(playerWins);
@@ -104,9 +129,13 @@ public class tictactoe extends JFrame
 		playerLosses = new JLabel("Losses:	");
 		playerName = new JLabel("Name:	");
 
+		player2Name.addActionListener(new nameListener());
+
 		player2Panel = new JPanel();
 		player2Panel.setSize(50,20);
 		player2Panel.setLayout(new GridLayout(3,2));
+		Border border = BorderFactory.createTitledBorder("Player 2 (O)");
+		player2Panel.setBorder(border);
 		player2Panel.add(playerName);
 		player2Panel.add(player2Name);
 		player2Panel.add(playerWins);
@@ -197,6 +226,22 @@ public class tictactoe extends JFrame
        }
     }
 
+	private class nameListener implements ActionListener
+    {
+       public void actionPerformed(ActionEvent e)
+       {
+		   if (e.getSource() == player1Name)
+		   {
+				Border border = BorderFactory.createTitledBorder( player1Name.getText() +" (X)");
+				player1Panel.setBorder(border);
+		   }
+		   else if (e.getSource() == player2Name)
+		   {
+				Border border = BorderFactory.createTitledBorder( player2Name.getText() +" (O)");
+				player2Panel.setBorder(border);
+		   }
+       }
+    }
 	public static void main(String[] args)
    	{
       	new tictactoe();
