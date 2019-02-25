@@ -461,6 +461,9 @@ public class tictactoe extends JFrame
 		   }
 		   else if (e.getSource() == resetGame)
 		   {
+			   int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game?");
+			   if (confirm == 0) 
+			   {
 			   gameInProgress = false;
 
 			   player1Name.setText("Player 1");
@@ -484,6 +487,7 @@ public class tictactoe extends JFrame
 			   bottomLeft.setIcon(null);
 			   bottomCenter.setIcon(null);
 			   bottomRight.setIcon(null);
+		   	}
 		   }
        }
     }
