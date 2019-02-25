@@ -51,10 +51,9 @@ public class tictactoe extends JFrame
 	private JButton exitGame;
 	private JLabel statusMessage;
 
+	private ImageIcon Ximage = new ImageIcon("X.png");
+	private ImageIcon Oimage = new ImageIcon("O.png");
 
-
-	ImageIcon Ximage = new ImageIcon("X.png");
-	ImageIcon Oimage = new ImageIcon("O.png");
 
 	public tictactoe()
 	{
@@ -66,6 +65,7 @@ public class tictactoe extends JFrame
 
 		   // Specify an action for the close button.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		setLayout(new BorderLayout());
 
@@ -200,6 +200,38 @@ public class tictactoe extends JFrame
 		panel.add(bottomLeft);
 		panel.add(bottomCenter);
 		panel.add(bottomRight);
+	}
+
+	private void manageWin(JTextField victorName, JLabel victorWins, JLabel loserLosses)
+	{
+		int temp;
+		statusMessage.setText(victorName.getText() + " wins this round");
+		gameInProgress = false;
+
+		temp = Integer.parseInt(victorWins.getText());
+		temp++;
+		victorWins.setText(Integer.toString(temp));
+
+		temp = Integer.parseInt(loserLosses.getText());
+		temp++;
+		loserLosses.setText(Integer.toString(temp));
+	}
+
+	private void setNewGame()
+	{
+		gameInProgress = true;
+		player1Name.setEditable(false);
+		player2Name.setEditable(false);
+		statusMessage.setText(player1Name.getText() + "'s turn.");
+		topRight.setIcon(null);
+		topCenter.setIcon(null);
+		topLeft.setIcon(null);
+		middleLeft.setIcon(null);
+		middleRight.setIcon(null);
+		middleCenter.setIcon(null);
+		bottomLeft.setIcon(null);
+		bottomCenter.setIcon(null);
+		bottomRight.setIcon(null);
 	}
 
 	private class TicTacToeListener implements ActionListener
@@ -373,6 +405,40 @@ public class tictactoe extends JFrame
 							}
 					}
 				}
+				//player1 wins
+				if 		(topLeft.getIcon() == Ximage && topCenter.getIcon() == Ximage && topRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (middleLeft.getIcon() == Ximage && middleCenter.getIcon() == Ximage && middleRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (bottomLeft.getIcon() == Ximage && bottomCenter.getIcon() == Ximage && bottomRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (topLeft.getIcon() == Ximage && middleCenter.getIcon() == Ximage && bottomRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (bottomLeft.getIcon() == Ximage && middleCenter.getIcon() == Ximage && topRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (topLeft.getIcon() == Ximage && middleLeft.getIcon() == Ximage && bottomLeft.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (topCenter.getIcon() == Ximage && middleCenter.getIcon() == Ximage && bottomCenter.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				else if (topRight.getIcon() == Ximage && middleRight.getIcon() == Ximage && bottomRight.getIcon() == Ximage)
+					manageWin(player1Name, player1Wins, player2Losses);
+				//player2 wins
+				else if (topLeft.getIcon() == Oimage && topCenter.getIcon() == Oimage && topRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (middleLeft.getIcon() == Oimage && middleCenter.getIcon() == Oimage && middleRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (bottomLeft.getIcon() == Oimage && bottomCenter.getIcon() == Oimage && bottomRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (topLeft.getIcon() == Oimage && middleCenter.getIcon() == Oimage && bottomRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (bottomLeft.getIcon() == Oimage && middleCenter.getIcon() == Oimage && topRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (topLeft.getIcon() == Oimage && middleLeft.getIcon() == Oimage && bottomLeft.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (topCenter.getIcon() == Oimage && middleCenter.getIcon() == Oimage && bottomCenter.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
+				else if (topRight.getIcon() == Oimage && middleRight.getIcon() == Oimage && bottomRight.getIcon() == Oimage)
+					manageWin(player2Name, player2Wins, player1Losses);
 		   }
 
 		   if (e.getSource() == player1Name)
@@ -391,30 +457,18 @@ public class tictactoe extends JFrame
 		   }
 		   else if (e.getSource() == newGame)
 		   {
-			   gameInProgress = true;
-			   player1Name.setEditable(false);
-			   player2Name.setEditable(false);
-			   statusMessage.setText(player1Name.getText() + "'s turn.");
-			   topRight.setIcon(null);
-			   topCenter.setIcon(null);
-			   topLeft.setIcon(null);
-			   middleLeft.setIcon(null);
-			   middleRight.setIcon(null);
-			   middleCenter.setIcon(null);
-			   bottomLeft.setIcon(null);
-			   bottomCenter.setIcon(null);
-			   bottomRight.setIcon(null);
+			   setNewGame();
 		   }
 		   else if (e.getSource() == resetGame)
 		   {
 			   gameInProgress = false;
-			
+
 			   player1Name.setText("Player 1");
 			   player1Name.setEditable(true);
 			   player2Name.setText("Player 2");
 			   player2Name.setEditable(true);
 
-			   statusMessage.setText("Welcom to Tic-Tac-Toe");
+			   statusMessage.setText("Welcome to Tic-Tac-Toe");
 
 				player1Losses.setText("0");
 				player1Wins.setText("0");
@@ -433,6 +487,8 @@ public class tictactoe extends JFrame
 		   }
        }
     }
+
+
 
 	public static void main(String[] args)
    	{
