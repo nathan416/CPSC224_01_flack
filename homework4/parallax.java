@@ -13,6 +13,8 @@ import java.awt.*;
 
 public class parallax extends JApplet
 {
+   private int currentX = 0; // Mouse cursor's X position
+   private int currentY = 0; // Mouse cursor's Y position
    
    /**
       init method
@@ -21,7 +23,8 @@ public class parallax extends JApplet
    public void init()
    {
       // Create a layout manager.
-      setLayout(new FlowLayout());     
+      setLayout(new FlowLayout());   
+
       
       // Add a mouse listener to this applet.
       addMouseListener(new MyMouseListener());
@@ -29,6 +32,23 @@ public class parallax extends JApplet
       // Add a mouse motion listener to this applet.
       addMouseMotionListener(new MyMouseMotionListener());
    }
+
+    /**
+      paint method
+      @param g The applet's Graphics object.
+   */
+   
+   public void paint(Graphics g)
+   {
+      // Call the superclass's paint method.
+      super.paint(g);
+      
+      //
+
+      // Draw
+      //boolean Graphics.drawImage(Image img, int x, int y, ImageObserver observer);
+   }
+   
    
    
    /**
