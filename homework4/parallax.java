@@ -71,7 +71,7 @@ public class parallax extends JApplet
       g.drawImage(image2, (currentX / 150) - 80, (currentY / 150) - 100, null);
       g.drawImage(image3, (currentX / 30) - 100, (currentY / 30) - 100, null);
       g.drawImage(image4, (currentX / 5) - 100, (currentY / 5) - 100, null);
-	  g.drawImage(image5, (currentX / 5) - 100 - currentXBird, (currentY / 5) - 100 - currentYBird, null);
+	  g.drawImage(image5, (currentX / 5) - 70 + currentXBird, (currentY / 5) - 70 + currentYBird, null);
    }
 
 
