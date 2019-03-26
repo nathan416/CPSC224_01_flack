@@ -17,6 +17,8 @@ public class parallax extends JApplet
 {
    private int currentX = 300; // Mouse cursor's X position (initialied to middle)
    private int currentY = 200; // Mouse cursor's Y position
+   private int currentXBird = 0;
+   private int currentYBird = 0;
    private Image image1;
    private Image image2;
    private Image image3;
@@ -69,7 +71,7 @@ public class parallax extends JApplet
       g.drawImage(image2, (currentX / 150) - 80, (currentY / 150) - 100, null);
       g.drawImage(image3, (currentX / 30) - 100, (currentY / 30) - 100, null);
       g.drawImage(image4, (currentX / 5) - 100, (currentY / 5) - 100, null);
-
+	  g.drawImage(image5, (currentX / 5) - 100 - currentXBird, (currentY / 5) - 100 - currentYBird, null);
    }
 
 
@@ -89,7 +91,8 @@ public class parallax extends JApplet
    {
       public void mouseClicked(MouseEvent e)
       {
-
+		  currentXBird = e.getX();
+          currentYBird = e.getY();
       }
       public void mousePressed(MouseEvent e)
       {
