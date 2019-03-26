@@ -21,13 +21,14 @@ public class parallax extends JApplet
    private Image image2;
    private Image image3;
    private Image image4;
-   
+	private Timer myTimer;
    /**
       init method
    */
-      
+
    public void init()
    {
+	  int delay = 30;
       try
       {
       image1 = ImageIO.read(new File("1.png"));
@@ -35,25 +36,28 @@ public class parallax extends JApplet
       image3 = ImageIO.read(new File("3.png"));
       image4 = ImageIO.read(new File("4.png"));
       }
-      catch(IOException e) 
+      catch(IOException e)
       {
          System.out.println("Error opening image files");
       }
       // Create a layout manager.
-      setLayout(new FlowLayout());   
+      setLayout(new FlowLayout());
 
       // Add a mouse listener to this applet.
       addMouseListener(new MyMouseListener());
-   
+
       // Add a mouse motion listener to this applet.
       addMouseMotionListener(new MyMouseMotionListener());
+
+	  myTimer = new Timer(delay, new MyTimerListener());
+	  myTimer.start();
    }
 
     /**
       paint method
       @param g The applet's Graphics object.
    */
-   
+
    public void paint(Graphics g)
    {
       // Call the superclass's paint method.
@@ -65,25 +69,33 @@ public class parallax extends JApplet
       g.drawImage(image4, (currentX / 5) - 100, (currentY / 5) - 100, null);
 
    }
-   
-   
+
+
    /**
       Private inner class that handles mouse events.
    */
-   
+
+   private class MyTimerListener implements ActionListener
+   {
+	   public void actionPerformed(ActionEvent e)
+	   {
+		   repaint();
+	   }
+   }
+
    private class MyMouseListener implements MouseListener
    {
       public void mouseClicked(MouseEvent e)
       {
-   
+
       }
       public void mousePressed(MouseEvent e)
       {
-   
+
       }
       public void mouseReleased(MouseEvent e)
       {
-   
+
       }
 
       public void mouseEntered(MouseEvent e)
@@ -100,7 +112,7 @@ public class parallax extends JApplet
    /**
       Private inner class to handle mouse motion events.
    */
-   
+
    private class MyMouseMotionListener implements MouseMotionListener
    {
       public void mouseDragged(MouseEvent e)
@@ -113,7 +125,6 @@ public class parallax extends JApplet
          //Update draw position and redraw to screen
          currentX = e.getX();
          currentY = e.getY();
-         repaint();
       }
    }
 }
