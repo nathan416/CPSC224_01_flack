@@ -102,12 +102,12 @@ public class parallax extends JApplet
 
       public void mouseEntered(MouseEvent e)
       {
-
+		  myTimer.start();
       }
 
       public void mouseExited(MouseEvent e)
       {
-
+		  myTimer.stop();
       }
    }
 
