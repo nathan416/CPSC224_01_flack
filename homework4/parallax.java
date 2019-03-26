@@ -21,6 +21,7 @@ public class parallax extends JApplet
    private Image image2;
    private Image image3;
    private Image image4;
+    private Image image5;
 	private Timer myTimer;
    /**
       init method
@@ -28,13 +29,14 @@ public class parallax extends JApplet
 
    public void init()
    {
-	  int delay = 30;
+	  int delay = 33;
       try
       {
       image1 = ImageIO.read(new File("1.png"));
       image2 = ImageIO.read(new File("2.png"));
       image3 = ImageIO.read(new File("3.png"));
       image4 = ImageIO.read(new File("4.png"));
+	  image5 = ImageIO.read(new File("5.png"));
       }
       catch(IOException e)
       {
