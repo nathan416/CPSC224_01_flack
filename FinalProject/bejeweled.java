@@ -22,8 +22,8 @@ public class bejeweled extends JFrame
 	private int currentRow;
 	private char[][] boardInfo = new char[5][6];
 
-	private final int WINDOW_WIDTH = 500;  // Window width
-	private final int WINDOW_HEIGHT = 500;
+	private final int WINDOW_WIDTH = 720;  // Window width
+	private final int WINDOW_HEIGHT = 600;
 	private final int squareSize = 120;
 	
 
