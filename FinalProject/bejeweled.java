@@ -25,7 +25,8 @@ public class bejeweled extends JFrame
 	private final int WINDOW_WIDTH = 720;  // Window width
 	private final int WINDOW_HEIGHT = 600;
 	private final int squareSize = 120;
-	
+
+	private Image background = new ImageIcon("background.jpg");
 
 	public bejeweled()
 	{
@@ -42,12 +43,19 @@ public class bejeweled extends JFrame
 	 //buildHighscorePanel();
 	 //buildPointsPanel();
 	 initializeBoard();
+
+	 add(bejeweledPanel);
 	}
 
 	private void buildBejeweledPanel()
 	{
 		bejeweledPanel = new JPanel();
-		
+
+	}
+
+	public void paint(Graphics g)
+    {
+		super.paint(g);
 	}
 
 	private void initializeBoard()
@@ -63,7 +71,7 @@ public class bejeweled extends JFrame
 				n = rand.nextInt(6);
 				boardInfo[i][j] = orbs[n];
 			}
-		} 
+		}
 
 	}
 
@@ -75,7 +83,7 @@ public class bejeweled extends JFrame
 	}
 
 	private class boardListener implements MouseListener
-	{	
+	{
 		public void mousePressed(MouseEvent e)
 		{
 			turnActive = true;
@@ -84,7 +92,7 @@ public class bejeweled extends JFrame
 		}
 
 		public void mouseClicked(MouseEvent e)
-		{  
+		{
 		}
 
 		public void mouseReleased(MouseEvent e)
@@ -131,4 +139,3 @@ public class bejeweled extends JFrame
 }
 
 }
-
