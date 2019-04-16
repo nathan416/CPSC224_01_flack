@@ -89,6 +89,7 @@ public class bejeweled extends JFrame
 
 		public void mouseReleased(MouseEvent e)
 		{
+			turnActive = false;
 		}
 
 		public void mouseEntered(MouseEvent e)
@@ -128,7 +129,7 @@ public class bejeweled extends JFrame
 		{
 		}
 
-}
+	}
 
 }
 
