@@ -27,6 +27,8 @@ public class bejeweled extends JApplet
 	private int y;
 	private int currentScore = 0;
 	private int numOrbsMatched;
+	private char currentColor;
+	private Timer turnTimer;
 
 	private final int WINDOW_WIDTH = 720;  // Window width
 	private final int WINDOW_HEIGHT = 700;
@@ -64,6 +66,7 @@ public class bejeweled extends JApplet
 
 	 theFrame.add(bejeweledPanel, BorderLayout.CENTER);
 	 theFrame.add(PointsPanel, BorderLayout.SOUTH);
+	 turnTimer = new Timer(10000, new boardTimer());
 
 	  // Add a mouse listener to this applet.
    addMouseListener(new boardListener());
@@ -103,9 +106,9 @@ public class bejeweled extends JApplet
 					eraseCombo(row,col,comboMap,boardInfo[row][col]);
 					repaint();
 					//try{
-					//	Thread.sleep(1000);
-					//}
-					//catch(InterruptedException ex){}
+				//		Thread.sleep(1000);
+				//	}
+				//	catch(InterruptedException ex){}
 					totalCombos += 1;
 				}
 			}
@@ -293,6 +296,8 @@ public class bejeweled extends JApplet
 	{
 		super.paint(g);
 		g.drawImage(background, 0, 0, null);
+		float opacity = 0.5f;
+		float fullOpacity = 1.0f;
 
 		//draw each orb
 		for(int row = 0; row < 5; row++)
@@ -312,6 +317,25 @@ public class bejeweled extends JApplet
 				else if (boardInfo[row][col] == 'P')
 					g.drawImage(pinkOrb, col*squareSize, row*squareSize, null);
 			}
+		}
+
+	
+
+		//draw orb player is holding
+		if(turnActive)
+		{
+			if(currentColor == 'R')
+				g.drawImage(redOrb, x-60, y-60, null);
+			if(currentColor == 'B')
+				g.drawImage(blueOrb, x-60, y-60, null);
+			if(currentColor == 'G')
+				g.drawImage(greenOrb, x-60, y-60, null);
+			if(currentColor == 'D')
+				g.drawImage(blueOrb, x-60, y-60, null);
+			if(currentColor == 'L')
+				g.drawImage(lightOrb, x-60, y-60, null);
+			if(currentColor == 'P')
+				g.drawImage(pinkOrb, x-60, y-60, null);
 		}
 	}
 
@@ -354,13 +378,28 @@ public class bejeweled extends JApplet
 		boardInfo[destRow][destCol] = temp;
 	}
 
+	private class boardTimer implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			currentScore = 0;
+			turnActive = false;
+			turnTimer.stop();
+			int matches = performTurn();
+			currentScore = matches * numOrbsMatched;
+			JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
+		}
+	}
+
 	private class boardListener implements MouseListener
 	{
 		public void mousePressed(MouseEvent e)
 		{
 			turnActive = true;
+			turnTimer.start();
 			currentCol = e.getX() / squareSize;
 			currentRow = e.getY() / squareSize;
+			currentColor = boardInfo[currentRow][currentCol];
 		}
 
 		public void mouseClicked(MouseEvent e)
@@ -369,11 +408,15 @@ public class bejeweled extends JApplet
 
 		public void mouseReleased(MouseEvent e)
 		{
-			currentScore = 0;
-			turnActive = false;
-			int matches = performTurn();
-			currentScore = matches * numOrbsMatched;
-			JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
+			if(turnActive)
+			{
+				currentScore = 0;
+				turnActive = false;
+				turnTimer.stop();
+				int matches = performTurn();
+				currentScore = matches * numOrbsMatched;
+				JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
+			}
 		}
 
 		public void mouseEntered(MouseEvent e)
@@ -403,15 +446,14 @@ public class bejeweled extends JApplet
 				{
 					swap(currentRow, currentCol, currentRow, (x / squareSize));
 					currentCol = x / squareSize;
-					repaint();
 				}
 
 				if(currentRow != (y / squareSize))
 				{
 					swap(currentRow, currentCol, (y / squareSize), currentCol);
 					currentRow = y / squareSize;
-					repaint();
 				}
+				repaint();
 			}
 			
 		}
