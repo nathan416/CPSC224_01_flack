@@ -11,6 +11,7 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class bejeweled extends JApplet
 {
@@ -24,9 +25,11 @@ public class bejeweled extends JApplet
 	private char[][] boardInfo = new char[5][6];
 	private int x;
 	private int y;
+	private int currentScore = 0;
+	private int numOrbsMatched;
 
 	private final int WINDOW_WIDTH = 720;  // Window width
-	private final int WINDOW_HEIGHT = 600;
+	private final int WINDOW_HEIGHT = 700;
 	private final int squareSize = 120;
 	private JFrame theFrame = new JFrame();
 
@@ -59,13 +62,197 @@ public class bejeweled extends JApplet
 	 //buildPointsPanel();
 	 initializeBoard();
 
-	 theFrame.add(bejeweledPanel);
+	 theFrame.add(bejeweledPanel, BorderLayout.CENTER);
+	 theFrame.add(PointsPanel, BorderLayout.SOUTH);
+
 	  // Add a mouse listener to this applet.
    addMouseListener(new boardListener());
 
    // Add a mouse motion listener to this applet.
    addMouseMotionListener(new boardMovementListener());
 	}
+
+	public int countCombos()
+	{
+		int totalCombos = 0;
+		char[][] comboMap = new char[5][6];
+		//initialize values
+		for(int i = 0; i < 5; i++)
+		{
+			for(int j = 0; j < 6; j++)
+				comboMap[i][j] = 'o';
+		}
+
+		//find which orbs will be cleared
+		for(int row = 0; row < 5; row++)
+		{
+			for(int col = 0; col < 6; col++)
+			{
+				if(boardInfo[row][col] != '0' && isComboMember(row,col))
+					comboMap[row][col] = 'X';
+			}
+		}
+		
+		//erase combos and increment counter
+		for(int row = 0; row < 5; row++)
+		{
+			for(int col = 0; col < 6; col++)
+			{
+				if(comboMap[row][col] == 'X' && boardInfo[row][col] != 'X')
+				{
+					eraseCombo(row,col,comboMap,boardInfo[row][col]);
+					repaint();
+					//try{
+					//	Thread.sleep(1000);
+					//}
+					//catch(InterruptedException ex){}
+					totalCombos += 1;
+				}
+			}
+		}
+
+		//perform orb cascades
+		while(xExists())
+		{
+			for(int row = 4; row > -1; row--)
+			{
+				for(int col = 5; col > -1; col--)
+				{
+					if(boardInfo[row][col] == 'X')
+					{
+						skyFall(row,col);
+					}
+				}
+			}
+		}
+
+		return totalCombos;
+
+	}
+
+	//cascades an orb if needed
+	public void skyFall(int row, int col)
+	{
+		int pos = row;
+		while(pos > 0)
+		{
+			boardInfo[pos][col] = boardInfo[pos - 1][col];
+			pos--;
+		}
+		boardInfo[0][col] = '0';
+	}
+
+	//returns true if there is an X on the board
+	public boolean xExists()
+	{
+		for(int row = 0; row < 5; row++)
+		{
+			for(int orb = 0; orb < 6; orb++)
+			{
+				if(boardInfo[row][orb] == 'X')
+					return true;
+			}
+		}
+		return false;
+	}
+
+	//returns true if the orb is part of a combo
+	public boolean isComboMember(int row, int col)
+	{
+		//vertical current bottom
+		if(row > 1)
+		{
+			if(boardInfo[row][col] == boardInfo[row - 1][col] && boardInfo[row][col] == boardInfo[row - 2][col])
+				return true;
+		}
+		//vertical current middle
+		if(row > 0 && row < 4)
+		{
+			if(boardInfo[row][col] == boardInfo[row - 1][col] && boardInfo[row][col] == boardInfo[row + 1][col])
+				return true;
+		}
+		//vertical current top
+		if(row < 3)
+		{
+			if(boardInfo[row][col] == boardInfo[row + 1][col] && boardInfo[row][col] == boardInfo[row + 2][col])
+				return true;
+		}
+		//horizonal current left
+		if(col < 4)
+		{
+			if(boardInfo[row][col] == boardInfo[row][col + 1] && boardInfo[row][col] == boardInfo[row][col + 2])
+				return true;
+		}
+		//horizontal currrent middle
+		if(col < 5 && col > 0)
+		{
+			if(boardInfo[row][col] == boardInfo[row][col + 1] && boardInfo[row][col] == boardInfo[row][col - 1])
+				return true;
+		}
+		//horizontal current right
+		if(col > 1)
+		{
+			if(boardInfo[row][col] == boardInfo[row][col - 1] && boardInfo[row][col] == boardInfo[row][col - 2])
+				return true;
+		}
+		return false;
+	}
+
+	public void eraseCombo(int row, int col, char[][] comboMap, char comboColor)
+	{
+		if(boardInfo[row][col] == comboColor && comboMap[row][col] == 'X')
+		{
+			boardInfo[row][col] = 'X';
+			if(row < 4)
+			{
+				eraseCombo(row+1, col, comboMap, comboColor);
+			}
+			if(row > 0)
+			{
+				eraseCombo(row-1, col, comboMap, comboColor);
+			}
+			if(col > 0)
+			{
+				eraseCombo(row, col-1, comboMap, comboColor);
+			}
+			if(col < 5)
+			{
+				eraseCombo(row, col+1, comboMap, comboColor);
+			}
+		}
+	}
+
+	public int performTurn()
+	{
+		char[] orbs = {'G','R','B','D','L','P'};
+		Random rand = new Random();
+		int n = 0;
+		numOrbsMatched = 0;
+		int totalCombos = countCombos();
+		int temp = countCombos();
+		//perform cascades
+		while(temp != 0)
+		{
+			totalCombos += temp;
+			temp = countCombos();
+		}
+		repaint();
+		for(int row = 0; row < 5; row++)
+		{
+			for(int col = 0; col < 6; col++)
+			{
+				if(boardInfo[row][col] == '0')
+				{
+					numOrbsMatched++;
+					n = rand.nextInt(6);
+					boardInfo[row][col] = orbs[n];
+				}
+			}
+		}
+		return totalCombos;
+	}
+
+
 
 
 
@@ -91,6 +278,8 @@ public class bejeweled extends JApplet
 	private void buildBejeweledPanel()
 	{
 		bejeweledPanel = new JPanel();
+		PointsPanel = new JPanel();
+
 
 	}
 
@@ -130,7 +319,7 @@ public class bejeweled extends JApplet
 	public void paint(Graphics g)
   {
 		//use a buffered image to eliminate flickering
-		bf = new BufferedImage(720,600, BufferedImage.TYPE_INT_RGB);
+		bf = new BufferedImage(WINDOW_WIDTH,WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		try
 		{
 			animation(bf.getGraphics());
@@ -180,7 +369,11 @@ public class bejeweled extends JApplet
 
 		public void mouseReleased(MouseEvent e)
 		{
+			currentScore = 0;
 			turnActive = false;
+			int matches = performTurn();
+			currentScore = matches * numOrbsMatched;
+			JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
 		}
 
 		public void mouseEntered(MouseEvent e)
