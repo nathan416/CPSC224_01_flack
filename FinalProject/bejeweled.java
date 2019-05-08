@@ -47,6 +47,8 @@ public class bejeweled extends JApplet
 	private Image lightOrb;
 	private Image pinkOrb;
 
+	private Connection con;
+
 	private BufferedImage bf;
 
 
@@ -77,6 +79,8 @@ public class bejeweled extends JApplet
 
    // Add a mouse motion listener to this applet.
    addMouseMotionListener(new boardMovementListener());
+
+  	con = connect();
 	}
 
 	private Connection connect()
@@ -91,6 +95,25 @@ public class bejeweled extends JApplet
         }
         return conn;
     }
+
+	public void getHighscore()
+	{
+
+	}
+
+	public void recordScore(int Score)
+	{
+		String sql = "INSERT INTO ScoreList(Score) VALUES(?)";
+
+        try (Connection con = this.connect();
+                PreparedStatement pstmt = con.prepareStatement(sql))
+		{
+			pstmt.setInt(1, Score);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
 
 	public int countCombos()
 	{
@@ -433,6 +456,7 @@ public class bejeweled extends JApplet
 				int matches = performTurn();
 				currentScore = matches * numOrbsMatched;
 				JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
+				recordScore(currentScore);
 			}
 		}
 
