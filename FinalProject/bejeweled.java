@@ -12,6 +12,10 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class bejeweled extends JApplet
 {
@@ -75,6 +79,19 @@ public class bejeweled extends JApplet
    addMouseMotionListener(new boardMovementListener());
 	}
 
+	private Connection connect()
+	{
+        // SQLite connection string
+        String url = "jdbc:sqlite:Scores.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
 	public int countCombos()
 	{
 		int totalCombos = 0;
@@ -95,7 +112,7 @@ public class bejeweled extends JApplet
 					comboMap[row][col] = 'X';
 			}
 		}
-		
+
 		//erase combos and increment counter
 		for(int row = 0; row < 5; row++)
 		{
@@ -259,10 +276,10 @@ public class bejeweled extends JApplet
 
 
 
-  public void readImages () 
-  { 
-    try 
-    {                
+  public void readImages ()
+  {
+    try
+    {
       background = ImageIO.read(new File("board.png"));
       redOrb = ImageIO.read(new File("red.png"));
       greenOrb = ImageIO.read(new File("green.png"));
@@ -270,12 +287,12 @@ public class bejeweled extends JApplet
 			darkOrb = ImageIO.read(new File("dark.png"));
 			lightOrb = ImageIO.read(new File("light.png"));
 			pinkOrb = ImageIO.read(new File("pink.png"));
-    } 
-    catch (IOException e) 
-    { 
-      //Not handled. 
-    } 
-  } 
+    }
+    catch (IOException e)
+    {
+      //Not handled.
+    }
+  }
 
 
 	private void buildBejeweledPanel()
@@ -319,7 +336,7 @@ public class bejeweled extends JApplet
 			}
 		}
 
-	
+
 
 		//draw orb player is holding
 		if(turnActive)
@@ -455,7 +472,7 @@ public class bejeweled extends JApplet
 				}
 				repaint();
 			}
-			
+
 		}
 
 	}
