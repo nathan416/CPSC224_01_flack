@@ -442,7 +442,8 @@ public class bejeweled extends JApplet
 			turnTimer.stop();
 			int matches = performTurn();
 			currentScore = matches * numOrbsMatched;
-			JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
+			recordScore(currentScore);
+			JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches + "\nCurrent HighScore: " + getHighscore());
 		}
 	}
 
@@ -470,8 +471,8 @@ public class bejeweled extends JApplet
 				turnTimer.stop();
 				int matches = performTurn();
 				currentScore = matches * numOrbsMatched;
-				JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches);
 				recordScore(currentScore);
+				JOptionPane.showMessageDialog(null, "You scored: " + currentScore + "\nTotal Combos: " + matches + "\nCurrent HighScore: " + getHighscore());
 			}
 		}
 
