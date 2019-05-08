@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class bejeweled extends JApplet
 {
@@ -96,9 +98,22 @@ public class bejeweled extends JApplet
         return conn;
     }
 
-	public void getHighscore()
+	public int getHighscore()
 	{
-
+		String sql = "SELECT * FROM ScoreList ORDER BY Score";
+		String sql2 = "SELECT Score FROM ScoreList";
+		int score = 0;
+        try (Connection con = this.connect();
+                PreparedStatement pstmt = con.prepareStatement(sql);
+				Statement stmt  = con.createStatement();
+				ResultSet rs = stmt.executeQuery(sql2))
+		{
+            pstmt.executeUpdate();
+			score = rs.getInt("Score");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		return score;
 	}
 
 	public void recordScore(int Score)
